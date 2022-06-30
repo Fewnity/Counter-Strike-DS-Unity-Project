@@ -9,8 +9,8 @@ public class Exporter : MonoBehaviour
     private List<Collision> AllCollisions = new List<Collision>();
     private List<Trigger> AllTriggers = new List<Trigger>();
     private List<ShadowTrigger> AllShadowTriggers = new List<ShadowTrigger>();
+    private PathFinding pathFinding;
     [Header("To fill")]
-    public PathFinding pathFinding;
     public BombTrigger AZone;
     public BombTrigger BZone;
     [Header("To copy in the code")]
@@ -24,6 +24,11 @@ public class Exporter : MonoBehaviour
     public string ShadowsTriggersCode;
     [TextArea(0, 6)]
     public string ZonesCode;
+
+    public void Awake()
+    {
+        pathFinding = GetComponent<PathFinding>();
+    }
 
     // Start is called before the first frame update
     void Start()

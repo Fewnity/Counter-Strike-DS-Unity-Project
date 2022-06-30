@@ -24,7 +24,7 @@ This Unity project is used to simplify some aspects of the Counter Strike DS gam
 - Enter in play mode and wait some seconds
 
 ### **Add Collisions/Stairs... :**
-- Open a map
+
 #### For collisions : 
 - Open the **"AllCollisions"** gameobject
 - Add a **"CollX"** gameobject with a box collider and a **"Collision"** script
@@ -34,19 +34,20 @@ Note : X is a number, collisions needs to be from 0 to X, do not make missing nu
 - Open the **"AllStairs"** gameobject
 - Add a **"StairsX"** gameobject with a **"Stairs"** Script
 - Add 4 gameobject in the new gameobject, (**"xA", "xB", "zA", "zB"**)
-- Put thees new gameobjects in the **"Stairs"** Script
 - put xA and xB at the bottom of the stairs
 - put zA and zB at the top of the stairs
-- Make a patern like this xA--------zA
-                  bottom  |         | Top
-                          xB--------zB
+- Make a patern like this 
+        xA--------zA
+bottom  |         | Top
+        xB--------zB
+
 - You can ajust Start and End Y Offset if needed
 Note : xA needs to be in front of zA and xb needs to be in front of zb.
 
 #### For bomb zones : 
 - Create a gameobject named **"ZoneA"** or **"ZoneB"**
 - Add a Box Collider and a **"Bomb Trigger"** script to it
-- Set the Box collider and the nearest waypoint in the **"Bomb Trigger"** script 
+- Set the nearest waypoint in the **"Bomb Trigger"** script 
 - Add the point in the **"Exporter"** script
 
 #### For waypoints :
@@ -61,13 +62,11 @@ Note : X is a number, points needs to be from 0 to X, do not make missing number
 - Open the **"Zones triggers"** gameobject
 - Add a **"TriggerX"** gameobject
 - Add a Box Collider and a **"Trigger"** script to it
-- Set the Box collider in the **"Trigger"** script 
 
 #### For shadows triggers :
 - Open the **"Shadows triggers"** gameobject
 - Add a **"ShadowTriggerX"** gameobject
 - Add a Box Collider and a **"Shadow Trigger"** script to it
-- Set the Box collider in the **"Shadow Trigger"** script 
 
 Note : X is a number, triggers needs to be from 0 to X, do not make missing number like 0,1,3,4.
 

@@ -2,10 +2,16 @@ using UnityEngine;
 
 public class Collision : MonoBehaviour
 {
+    [HideInInspector]
     public BoxCollider m_BoxCollider;
     public bool ignoreRaycast = false;
     [Header("Zone index of the collision")]
     public int ZoneCollision;
+
+    public void Awake()
+    {
+        m_BoxCollider = GetComponent<BoxCollider>();
+    }
 
     /// <summary>
     /// Get the position of the wall

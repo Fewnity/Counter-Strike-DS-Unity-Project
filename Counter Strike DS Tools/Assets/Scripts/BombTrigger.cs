@@ -2,10 +2,15 @@ using UnityEngine;
 
 public class BombTrigger : MonoBehaviour
 {
-    [Header("Collider of the trigger")]
+    [HideInInspector]
     public BoxCollider m_BoxCollider;
     [Header("Pathfinding point in the trigger")]
     public Point connectedPoint;
+
+    public void Awake()
+    {
+        m_BoxCollider = GetComponent<BoxCollider>();
+    }
 
     /// <summary>
     /// Get the position of the trigger

@@ -1,23 +1,23 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Stairs : MonoBehaviour
 {
+    private Transform xA;
+    private Transform xB;
+    private Transform zA;
+    private Transform zB;
 
-    public Transform xA;
-    public Transform xB;
-    public Transform zA;
-    public Transform zB;
-
-    public Vector3 FinalOffset;
+    [HideInInspector]
     public int Direction;
     public float StartYOffset;
     public float EndYOffset;
+    [Header("Put the collisions where the stairs is ending (top of the stairs)\nif the collider is blocking the player")]
     public Collision ConnectedTo;
 
     void Awake()
     {
+        GetGameObjects();
+
         Transform Angle = new GameObject().transform;
 
         Angle.LookAt(xA.position, zA.position);
@@ -35,7 +35,6 @@ public class Stairs : MonoBehaviour
                 size.z -= 0.33f;
                 ConnectedTo.m_BoxCollider.size = size;
             }
-                //ConnectedTo.FinalOffset.z = -0.33f;
         }
         else if (xA.position.z < zA.position.z)
         {
@@ -50,7 +49,6 @@ public class Stairs : MonoBehaviour
                 size.z -= 0.33f;
                 ConnectedTo.m_BoxCollider.size = size;
             }
-                //ConnectedTo.FinalOffset.z = 0.33f;
         }
         else if (xA.position.x > zA.position.x)
         {
@@ -65,7 +63,6 @@ public class Stairs : MonoBehaviour
                 size.x -= 0.33f;
                 ConnectedTo.m_BoxCollider.size = size;
             }
-                //ConnectedTo.FinalOffset.x = -0.33f;
         }
         else if (xA.position.x < zA.position.x)
         {
@@ -80,7 +77,6 @@ public class Stairs : MonoBehaviour
                 size.x -= 0.33f;
                 ConnectedTo.m_BoxCollider.size = size;
             }
-                //ConnectedTo.FinalOffset.x = 0.33f;
         }
     }
 
@@ -89,17 +85,30 @@ public class Stairs : MonoBehaviour
         Min = new Vector3();
         Max = new Vector3();
 
-        Min.x = Mathf.Min(xA.position.x, Mathf.Min(xB.position.x, Mathf.Min(zA.position.x, zB.position.x))) + FinalOffset.x;
-        Min.y = Mathf.Min(xA.position.y, Mathf.Min(xB.position.y, Mathf.Min(zA.position.y, zB.position.y))) + FinalOffset.y - StartYOffset;
-        Min.z = -Mathf.Min(xA.position.z, Mathf.Min(xB.position.z, Mathf.Min(zA.position.z, zB.position.z))) + FinalOffset.z;
+        Min.x = Mathf.Min(xA.position.x, Mathf.Min(xB.position.x, Mathf.Min(zA.position.x, zB.position.x)));
+        Min.y = Mathf.Min(xA.position.y, Mathf.Min(xB.position.y, Mathf.Min(zA.position.y, zB.position.y))) - StartYOffset;
+        Min.z = -Mathf.Min(xA.position.z, Mathf.Min(xB.position.z, Mathf.Min(zA.position.z, zB.position.z)));
 
-        Max.x = Mathf.Max(xA.position.x, Mathf.Max(xB.position.x, Mathf.Max(zA.position.x, zB.position.x))) + FinalOffset.x;
-        Max.y = Mathf.Max(xA.position.y, Mathf.Max(xB.position.y, Mathf.Max(zA.position.y, zB.position.y))) + FinalOffset.y - EndYOffset;
-        Max.z = -Mathf.Max(xA.position.z, Mathf.Max(xB.position.z, Mathf.Max(zA.position.z, zB.position.z))) + FinalOffset.z;
+        Max.x = Mathf.Max(xA.position.x, Mathf.Max(xB.position.x, Mathf.Max(zA.position.x, zB.position.x)));
+        Max.y = Mathf.Max(xA.position.y, Mathf.Max(xB.position.y, Mathf.Max(zA.position.y, zB.position.y))) - EndYOffset;
+        Max.z = -Mathf.Max(xA.position.z, Mathf.Max(xB.position.z, Mathf.Max(zA.position.z, zB.position.z)));
+    }
+
+    private void GetGameObjects()
+    {
+        if (xA == null)
+            xA = transform.Find("xA");
+        if (xB == null)
+            xB = transform.Find("xB");
+        if (zA == null)
+            zA = transform.Find("zA");
+        if (zB == null)
+            zB = transform.Find("zB");
     }
 
     public void OnDrawGizmos()
     {
+        GetGameObjects();
         Gizmos.color = Color.red;
         Gizmos.DrawLine(xA.position, zA.position);
         Gizmos.DrawLine(xB.position, zB.position);

@@ -3,7 +3,13 @@ using UnityEngine;
 public class Trigger : MonoBehaviour
 {
     public Vector3 FinalOffset;
+    [HideInInspector]
     public BoxCollider m_BoxCollider;
+
+    public void Awake()
+    {
+        m_BoxCollider = GetComponent<BoxCollider>();
+    }
 
     /// <summary>
     /// Get the position of the trigger
