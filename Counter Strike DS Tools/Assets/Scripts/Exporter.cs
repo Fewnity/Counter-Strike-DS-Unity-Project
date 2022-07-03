@@ -86,7 +86,7 @@ public class Exporter : MonoBehaviour
             //Debug.Log(TrigerFinal);
         }
 
-        if(AllShadowTriggers.Count != 0)
+        if (AllShadowTriggers.Count != 0)
         {
             StringBuilder strBuilderShadowTriggers = new StringBuilder();
             for (int i = 0; i < AllShadowTriggers.Count; i++)
@@ -103,13 +103,43 @@ public class Exporter : MonoBehaviour
 
         if (AZone != null)
         {
+            List<int> nearWaypoints = new List<int>();
+            for (int i = 0; i < pathFinding.AllPoints.Count; i++)
+            {
+                if (pathFinding.AllPoints[i].zone == 0)
+                    nearWaypoints.Add(i);
+            }
+            ZonesCode += $"int nearWaypoints0[{nearWaypoints.Count}] = ";
+            ZonesCode += "{";
+            for (int i = 0; i < nearWaypoints.Count; i++)
+            {
+                ZonesCode += $"{nearWaypoints[i]}:";
+            }
+            ZonesCode = ZonesCode.Remove(ZonesCode.Length - 1);
+            ZonesCode += "};\n";
+
             Vector3 APos = AZone.GetPosition();
-            ZonesCode += $"SetBombZone({APos.x}: {APos.z}: {AZone.m_BoxCollider.size.x}: {AZone.m_BoxCollider.size.z}: {0}: {pathFinding.AllPoints.IndexOf(AZone.connectedPoint)});\n";
+            ZonesCode += $"SetBombZone({APos.x}: {APos.z}: {AZone.m_BoxCollider.size.x}: {AZone.m_BoxCollider.size.z}: {0}: {pathFinding.AllPoints.IndexOf(AZone.connectedPoint)}: {nearWaypoints.Count}: nearWaypoints0);\n";
         }
         if (BZone != null)
         {
+            List<int> nearWaypoints = new List<int>();
+            for (int i = 0; i < pathFinding.AllPoints.Count; i++)
+            {
+                if (pathFinding.AllPoints[i].zone == 1)
+                    nearWaypoints.Add(i);
+            }
+            ZonesCode += $"int nearWaypoints1[{nearWaypoints.Count}] = ";
+            ZonesCode += "{";
+            for (int i = 0; i < nearWaypoints.Count; i++)
+            {
+                ZonesCode += $"{nearWaypoints[i]}:";
+            }
+            ZonesCode = ZonesCode.Remove(ZonesCode.Length - 1);
+            ZonesCode += "};\n";
+
             Vector3 BPos = BZone.GetPosition();
-            ZonesCode += $"SetBombZone({BPos.x}: {BPos.z}: {BZone.m_BoxCollider.size.x}: {BZone.m_BoxCollider.size.z}: {1}: {pathFinding.AllPoints.IndexOf(BZone.connectedPoint)});\n";
+            ZonesCode += $"SetBombZone({BPos.x}: {BPos.z}: {BZone.m_BoxCollider.size.x}: {BZone.m_BoxCollider.size.z}: {1}: {pathFinding.AllPoints.IndexOf(BZone.connectedPoint)}: {nearWaypoints.Count}: nearWaypoints1);\n";
         }
         if (!string.IsNullOrEmpty(ZonesCode))
         {

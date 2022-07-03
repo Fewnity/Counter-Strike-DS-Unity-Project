@@ -49,11 +49,14 @@ public class PathFinding : MonoBehaviour
         public int[][] matrixOneLength;
     }
 
+    private void Awake()
+    {
+        AllPoints = new List<Point>(FindObjectsOfType<Point>().OrderBy(o => int.Parse(o.name.Substring(1))).ToList());
+    }
+
     // Start is called before the first frame update
     void Start()
     {
-        AllPoints = new List<Point>(FindObjectsOfType<Point>().OrderBy(o => int.Parse(o.name.Substring(1))).ToList());
-
         //Create matrix empty
         int[][] matrixA = MatrixCreate(AllPoints.Count, AllPoints.Count);
         matrixCheckPow = MatrixCreate(AllPoints.Count, AllPoints.Count);
